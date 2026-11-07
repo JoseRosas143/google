@@ -5,75 +5,77 @@ import {
   ShieldCheck, 
   Mail, 
   ExternalLink, 
-  Users, 
   Laptop, 
   Video, 
   CheckCircle2, 
-  Copy, 
   Check, 
-  Eye, 
-  EyeOff, 
-  BarChart3, 
   Building2, 
   ArrowRight,
   HelpCircle,
-  FileText
+  FileText,
+  AlertCircle
 } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function HomePage() {
-  const [isAdminView, setIsAdminView] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("Business Standard");
   const [leadForm, setLeadForm] = useState({ name: "", email: "", company: "", country: "México", notes: "" });
+  const [loading, setLoading] = useState(false);
   const [leadSent, setLeadSent] = useState(false);
-  const [revealedCodes, setRevealedCodes] = useState<Record<string, boolean>>({});
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Inventario privado cargado de forma segura en memoria de administración
-  const [codes, setCodes] = useState([
-    { id: "1", code: "A9VQV693FYQHY3P", edition: "Business Standard", region: "América", status: "available" },
-    { id: "2", code: "HDEDJQKWTDWGCNY", edition: "Business Standard", region: "América", status: "available" },
-    { id: "3", code: "C7AA6MKXPRKDW7V", edition: "Business Starter", region: "América", status: "available" },
-    { id: "4", code: "N7J63X9YCXLKAMF", edition: "Business Starter", region: "América", status: "available" }
-  ]);
-
-  const [leads, setLeads] = useState([
-    { id: "L-101", name: "Carlos Mendoza", company: "Logística MX", email: "cmendoza@logisticamx.com", plan: "Business Standard", status: "new", date: "2026-11-06" }
-  ]);
-
-  const toggleReveal = (id: string) => {
-    setRevealedCodes(prev => ({ ...prev, [id]: !prev[id] }));
+  // Registrar clic analítico en Supabase
+  const trackReferralClick = async () => {
+    try {
+      await supabase.from("analytics_events").insert([
+        {
+          event_name: "referral_click",
+          page_path: window.location.pathname,
+          metadata: { target_url: "https://referworkspace.app.goo.gl/B9iH" }
+        }
+      ]);
+    } catch (e) {
+      console.warn("Evento no registrado:", e);
+    }
   };
 
-  const copyToClipboard = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
-
-  const handleLeadSubmit = (e: React.FormEvent) => {
+  // Enviar prospecto real a la tabla 'leads' de Supabase
+  const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newLead = {
-      id: `L-${Date.now().toString().slice(-4)}`,
-      name: leadForm.name,
-      company: leadForm.company,
-      email: leadForm.email,
-      plan: selectedPlan,
-      status: "new",
-      date: new Date().toISOString().split("T")[0]
-    };
-    setLeads([newLead, ...leads]);
-    setLeadSent(true);
-    setTimeout(() => {
-      setLeadSent(false);
-      setModalOpen(false);
-      setLeadForm({ name: "", email: "", company: "", country: "México", notes: "" });
-    }, 2200);
+    setLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const { error } = await supabase.from("leads").insert([
+        {
+          name: leadForm.name,
+          email: leadForm.email,
+          company: leadForm.company,
+          country: leadForm.country,
+          message: `Plan seleccionado: ${selectedPlan}. Notas: ${leadForm.notes}`,
+          status: "new"
+        }
+      ]);
+
+      if (error) throw error;
+
+      setLeadSent(true);
+      setTimeout(() => {
+        setLeadSent(false);
+        setModalOpen(false);
+        setLeadForm({ name: "", email: "", company: "", country: "México", notes: "" });
+      }, 2500);
+    } catch (err: any) {
+      setErrorMessage(err.message || "Error al conectar con la base de datos.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-between selection:bg-blue-100 selection:text-blue-900">
-      {/* BARRA SUPERIOR DE NAVEGACIÓN */}
+      {/* NAVBAR */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -97,7 +99,6 @@ export default function HomePage() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {/* Botón principal obligatorio hacia el dominio corporativo */}
             <a
               href="https://jrconsulting.com.mx"
               target="_blank"
@@ -107,162 +108,9 @@ export default function HomePage() {
               <span>J R Consulting</span>
               <ExternalLink className="w-4 h-4 text-blue-400 group-hover:translate-x-0.5 transition-transform" />
             </a>
-
-            {/* Alternador de panel administrativo privado */}
-            <button
-              onClick={() => setIsAdminView(!isAdminView)}
-              className={`p-2 rounded-lg border text-xs font-semibold transition-all ${
-                isAdminView 
-                  ? "bg-amber-100 text-amber-900 border-amber-300" 
-                  : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200"
-              }`}
-              title="Alternar vista de administrador"
-            >
-              {isAdminView ? "Cerrar Panel" : "Admin Panel"}
-            </button>
           </div>
         </div>
       </header>
-
-      {/* VISTA ADMINISTRATIVA / ADMIN CONSOLE */}
-      {isAdminView && (
-        <aside className="bg-slate-900 text-slate-100 border-b-4 border-amber-500 py-8 px-4 sm:px-6 lg:px-8 animate-fadeIn">
-          <div className="max-w-7xl mx-auto space-y-8">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-              <div>
-                <h2 className="text-2xl font-bold flex items-center gap-2 text-white">
-                  <BarChart3 className="text-amber-400 w-6 h-6" /> Panel de Control Administrativo (/admin)
-                </h2>
-                <p className="text-sm text-slate-400">
-                  Gestión privada de enlace único, inventario seguro de códigos promocionales y registro de prospectos.
-                </p>
-              </div>
-              <div className="flex items-center gap-3 text-xs">
-                <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full font-mono">
-                  Enlace Activo: referworkspace.app.goo.gl/B9iH
-                </span>
-              </div>
-            </div>
-
-            {/* KPIs */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-                <span className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Clics Enlace B9iH</span>
-                <p className="text-2xl font-bold text-blue-400 mt-1">128</p>
-              </div>
-              <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-                <span className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Prospectos Totales</span>
-                <p className="text-2xl font-bold text-amber-400 mt-1">{leads.length}</p>
-              </div>
-              <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-                <span className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Códigos Disponibles</span>
-                <p className="text-2xl font-bold text-emerald-400 mt-1">4 / 4</p>
-              </div>
-              <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-                <span className="text-xs text-slate-400 uppercase tracking-wider font-semibold">CTR Global Referidos</span>
-                <p className="text-2xl font-bold text-purple-400 mt-1">8.4%</p>
-              </div>
-            </div>
-
-            {/* BÓVEDA DE CÓDIGOS PROMOCIONALES */}
-            <div className="bg-slate-800/60 rounded-xl p-6 border border-slate-700 space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-lg text-white flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-amber-400" /> Bóveda Privada de Códigos (Continente Americano)
-                </h3>
-                <span className="text-xs text-slate-400">Entrega individual y segura a clientes calificados</span>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-300">
-                  <thead className="text-xs uppercase bg-slate-900/80 text-slate-400 border-b border-slate-700">
-                    <tr>
-                      <th className="py-3 px-4">Edición</th>
-                      <th className="py-3 px-4">Región</th>
-                      <th className="py-3 px-4">Código Cifrado / Máscara</th>
-                      <th className="py-3 px-4">Estado</th>
-                      <th className="py-3 px-4 text-right">Acción</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-700/60 font-mono text-xs">
-                    {codes.map((c) => {
-                      const isRevealed = revealedCodes[c.id];
-                      const masked = `${c.code.slice(0, 4)}••••••••${c.code.slice(-2)}`;
-                      return (
-                        <tr key={c.id} className="hover:bg-slate-700/30">
-                          <td className="py-3 px-4 font-sans font-medium text-white">{c.edition}</td>
-                          <td className="py-3 px-4">{c.region}</td>
-                          <td className="py-3 px-4 tracking-wider text-amber-300">
-                            {isRevealed ? c.code : masked}
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className="px-2 py-0.5 rounded-full bg-emerald-900/60 text-emerald-300 border border-emerald-700 text-[11px]">
-                              {c.status}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-right space-x-2 font-sans">
-                            <button
-                              onClick={() => toggleReveal(c.id)}
-                              className="px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs inline-flex items-center gap-1"
-                            >
-                              {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-                              {isRevealed ? "Ocultar" : "Revelar"}
-                            </button>
-                            <button
-                              onClick={() => copyToClipboard(c.code, c.id)}
-                              className="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white text-xs inline-flex items-center gap-1"
-                            >
-                              {copiedId === c.id ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                              {copiedId === c.id ? "Copiado" : "Copiar"}
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* LISTA DE PROSPECTOS RECIBIDOS */}
-            <div className="bg-slate-800/60 rounded-xl p-6 border border-slate-700 space-y-4">
-              <h3 className="font-semibold text-lg text-white flex items-center gap-2">
-                <Users className="w-5 h-5 text-blue-400" /> Solicitudes de Descuento Recibidas (CRM)
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-300">
-                  <thead className="text-xs uppercase bg-slate-900/80 text-slate-400 border-b border-slate-700">
-                    <tr>
-                      <th className="py-3 px-4">Fecha</th>
-                      <th className="py-3 px-4">Prospecto</th>
-                      <th className="py-3 px-4">Empresa</th>
-                      <th className="py-3 px-4">Correo</th>
-                      <th className="py-3 px-4">Plan Solicitado</th>
-                      <th className="py-3 px-4">Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-700/60 text-xs">
-                    {leads.map((ld) => (
-                      <tr key={ld.id} className="hover:bg-slate-700/30">
-                        <td className="py-3 px-4 font-mono text-slate-400">{ld.date}</td>
-                        <td className="py-3 px-4 font-semibold text-white">{ld.name}</td>
-                        <td className="py-3 px-4">{ld.company}</td>
-                        <td className="py-3 px-4 text-blue-300">{ld.email}</td>
-                        <td className="py-3 px-4">{ld.plan}</td>
-                        <td className="py-3 px-4">
-                          <span className="px-2 py-0.5 rounded-full bg-blue-900/60 text-blue-300 border border-blue-700">
-                            {ld.status}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </aside>
-      )}
 
       {/* HERO PRINCIPAL */}
       <main className="flex-1">
@@ -284,16 +132,16 @@ export default function HomePage() {
                 </h1>
 
                 <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-                  Profesionaliza la comunicación de tu empresa, organiza tus archivos con seguridad empresarial y potencia el trabajo en equipo con la asesoría estratégica de <strong>J R Consulting</strong>.
+                  Profesionaliza la comunicación de tu empresa, organiza tus archivos con seguridad empresarial y potencia el trabajo en equipo con la asesoría de <strong>J R Consulting</strong>.
                 </p>
 
-                {/* BOTONES GRÁFICOS OFICIALES EN EL HERO */}
+                {/* BOTONES OFICIALES */}
                 <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                  {/* Botón oficial de Referencia (Destino único B9iH) */}
                   <a
                     href="https://referworkspace.app.goo.gl/B9iH"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={trackReferralClick}
                     aria-label="Registrarse en Google Workspace mediante el enlace de referencia"
                     className="inline-block transition-transform hover:scale-[1.03] active:scale-95 shadow-md rounded"
                   >
@@ -305,7 +153,6 @@ export default function HomePage() {
                     />
                   </a>
 
-                  {/* Botón secundario para solicitar descuento */}
                   <button
                     onClick={() => setModalOpen(true)}
                     className="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
@@ -316,13 +163,13 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-6 pt-3 text-xs text-slate-500 font-medium">
-                  <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Prueba de 14 días oficial</span>
+                  <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Prueba oficial de 14 días</span>
                   <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Descuentos promocionales exclusivos</span>
                   <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-600" /> Asesoría J R Consulting</span>
                 </div>
               </div>
 
-              {/* TARJETA DESTACADA DEL HERO */}
+              {/* TARJETA DESTACADA */}
               <div className="lg:col-span-5">
                 <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-200/80 relative">
                   <div className="absolute -top-3 right-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
@@ -357,6 +204,7 @@ export default function HomePage() {
                       href="https://referworkspace.app.goo.gl/B9iH"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={trackReferralClick}
                       className="w-full py-3 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium text-sm flex items-center justify-center gap-2 transition-all border border-blue-200"
                     >
                       <span>Comenzar Prueba Directa</span>
@@ -370,7 +218,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECCIÓN OBLIGATORIA: CONTENIDO ORIGINAL DE GOOGLE WORKSPACE (SECCIÓN 4) */}
+        {/* CONTENIDO ORIGINAL DE GOOGLE WORKSPACE */}
         <section id="workspace" className="py-16 bg-white border-y border-slate-200">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
@@ -378,7 +226,6 @@ export default function HomePage() {
               <p className="text-slate-600 mt-2">Mensaje y recursos oficiales del programa de referencias de Google Workspace.</p>
             </div>
 
-            {/* Contenedor del contenido original exacto */}
             <div className="bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm space-y-6 text-slate-700 leading-relaxed">
               <div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">¿Qué es Google Workspace?</h3>
@@ -441,6 +288,7 @@ export default function HomePage() {
                     href="https://referworkspace.app.goo.gl/B9iH" 
                     target="_blank" 
                     rel="noopener noreferrer" 
+                    onClick={trackReferralClick}
                     className="text-blue-700 font-bold underline break-all"
                   >
                     https://referworkspace.app.goo.gl/B9iH
@@ -482,7 +330,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Colaboración en Tiempo Real</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Google Docs, Sheets y Slides permiten a múltiples miembros del equipo editar simultáneamente desde cualquier dispositivo con historial de versiones.
+                  Google Docs, Sheets y Slides permiten al equipo editar simultáneamente desde cualquier dispositivo con historial de versiones.
                 </p>
               </div>
 
@@ -492,7 +340,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Control y Seguridad Total</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Consola de administración centralizada para gestionar usuarios, permisos, verificación en dos pasos y políticas de seguridad en todos los dispositivos.
+                  Consola de administración centralizada para gestionar usuarios, permisos, verificación en dos pasos y políticas en todos los dispositivos.
                 </p>
               </div>
             </div>
@@ -507,7 +355,7 @@ export default function HomePage() {
                 Ediciones Oficiales
               </span>
               <h2 className="text-3xl font-extrabold text-slate-900 mt-3">Elige la edición ideal para tu equipo</h2>
-              <p className="text-slate-600 mt-2">Precios de referencia según términos comerciales vigentes de Google para la región.</p>
+              <p className="text-slate-600 mt-2">Precios de referencia para la región conforme a las condiciones vigentes de Google.</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -548,6 +396,7 @@ export default function HomePage() {
                     href="https://referworkspace.app.goo.gl/B9iH"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={trackReferralClick}
                     className="w-full py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-sm flex items-center justify-center gap-2 transition-all"
                   >
                     <span>Registro Oficial B9iH</span>
@@ -596,6 +445,7 @@ export default function HomePage() {
                     href="https://referworkspace.app.goo.gl/B9iH"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={trackReferralClick}
                     className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm flex items-center justify-center gap-2 transition-all shadow"
                   >
                     <span>Registro Oficial B9iH</span>
@@ -607,14 +457,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECCIÓN DESCUENTOS Y CONTACTO OFICIAL GMAIL */}
+        {/* SECCIÓN DESCUENTOS Y BOTÓN OFICIAL GMAIL */}
         <section id="descuentos" className="py-20 bg-slate-900 text-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               ¿Buscas un descuento exclusivo para tu empresa?
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              J R Consulting cuenta con un inventario privado de códigos promocionales para la región de América en las ediciones Business Starter y Business Standard. Solicita información y te orientaremos en el proceso.
+              J R Consulting cuenta con inventario de códigos promocionales para la región de América en Business Starter y Business Standard. Solicita información y te orientaremos en el proceso.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
@@ -625,7 +475,6 @@ export default function HomePage() {
                 Solicitar Descuento Individual
               </button>
 
-              {/* BOTÓN OFICIAL GMAIL */}
               <div className="flex flex-col items-center gap-1">
                 <a
                   href="mailto:google@jrconsulting.com.mx"
@@ -677,7 +526,7 @@ export default function HomePage() {
                   <HelpCircle className="w-5 h-5 text-blue-600" /> ¿Necesito tener un dominio web propio?
                 </h3>
                 <p className="mt-2 text-slate-600 text-sm leading-relaxed">
-                  Sí, para utilizar el correo corporativo (ej. tú@empresa.com) requieres un dominio. Si aún no cuentas con uno, puedes adquirirlo directamente al iniciar el registro en Google Workspace o solicitar asesoría con J R Consulting.
+                  Sí, para utilizar el correo corporativo (ej. contacto@empresa.com) requieres un dominio. Si aún no cuentas con uno, puedes adquirirlo directamente al iniciar el registro en Google Workspace o solicitar asesoría con J R Consulting.
                 </p>
               </div>
             </div>
@@ -688,7 +537,7 @@ export default function HomePage() {
       {/* MODAL DE SOLICITUD DE DESCUENTO */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl border border-slate-200 relative animate-scaleUp">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl border border-slate-200 relative">
             <button 
               onClick={() => setModalOpen(false)}
               className="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-xl font-bold"
@@ -701,17 +550,24 @@ export default function HomePage() {
                 <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
                   <Check className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900">¡Solicitud Recibida!</h3>
+                <h3 className="text-2xl font-bold text-slate-900">¡Solicitud Guardada!</h3>
                 <p className="text-sm text-slate-600">
-                  Hemos registrado tus datos. Un asesor de J R Consulting verificará la elegibilidad y te enviará individualmente el código promocional para <strong>{selectedPlan}</strong>.
+                  Tus datos han sido registrados en nuestro sistema. Un asesor de J R Consulting verificará la elegibilidad y se comunicará contigo.
                 </p>
               </div>
             ) : (
               <div>
                 <h3 className="text-2xl font-bold text-slate-900">Solicitar Descuento Promocional</h3>
                 <p className="text-xs text-slate-500 mt-1 mb-6">
-                  Los códigos se gestionan de manera individual conforme a las normativas de Google.
+                  Los códigos se asignan y gestionan de forma individual conforme a los términos de Google.
                 </p>
+
+                {errorMessage && (
+                  <div className="mb-4 p-3 rounded-lg bg-red-50 text-red-700 text-xs flex items-center gap-2 border border-red-200">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
 
                 <form onSubmit={handleLeadSubmit} className="space-y-4">
                   <div>
@@ -764,14 +620,15 @@ export default function HomePage() {
                   </div>
 
                   <p className="text-[11px] text-slate-500 italic pt-2">
-                    Al enviar aceptas ser contactado por J R Consulting para fines informativos y la asignación del beneficio. No compartimos tu información.
+                    Al enviar aceptas ser contactado por J R Consulting para fines informativos y asignación de la promoción.
                   </p>
 
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all mt-4"
+                    disabled={loading}
+                    className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all mt-4 disabled:opacity-50"
                   >
-                    Enviar Solicitud
+                    {loading ? "Registrando..." : "Enviar Solicitud"}
                   </button>
                 </form>
               </div>
@@ -789,7 +646,6 @@ export default function HomePage() {
               <span className="text-white font-bold text-base tracking-wide">J R Consulting</span>
             </div>
 
-            {/* Botón hacia el sitio corporativo en el footer */}
             <a
               href="https://jrconsulting.com.mx"
               target="_blank"
@@ -805,9 +661,10 @@ export default function HomePage() {
                 href="https://referworkspace.app.goo.gl/B9iH" 
                 target="_blank" 
                 rel="noopener noreferrer"
+                onClick={trackReferralClick}
                 className="hover:text-white transition-colors"
               >
-                Enlace de Referencia Oficial
+                Enlace Oficial B9iH
               </a>
               <span>•</span>
               <a 
@@ -821,14 +678,10 @@ export default function HomePage() {
 
           <hr className="border-slate-800" />
 
-          {/* AVISO DE INDEPENDENCIA COMERCIAL */}
           <div className="space-y-2 text-slate-300 leading-relaxed max-w-4xl">
-            <p className="font-semibold text-slate-200">Aviso de Independencia Comercial y Divulgación de Afiliación:</p>
+            <p className="font-semibold text-slate-200">Aviso de Independencia Comercial y Divulgación:</p>
             <p>
-              J R Consulting es un proyecto independiente de asesoría y promoción tecnológica. Google Workspace y las marcas comerciales asociadas son propiedad de Google LLC. Esta plataforma no es operada ni administrada por Google y no implica respaldo oficial directo salvo las autorizaciones del programa de referencias de Google Workspace. J R Consulting puede recibir una compensación por referencias exitosas conforme a los términos del programa.
-            </p>
-            <p>
-              Único enlace oficial de registro: <code>https://referworkspace.app.goo.gl/B9iH</code>. Los recursos informativos complementarios <code>https://c.gle/...</code> corresponden a material informativo del programa.
+              J R Consulting es un proyecto independiente de consultoría y promoción tecnológica. Google Workspace y las marcas comerciales asociadas son propiedad de Google LLC. Esta plataforma no es operada ni administrada por Google y no implica respaldo oficial directo salvo las autorizaciones del programa de referencias de Google Workspace. J R Consulting puede recibir una compensación por referencias exitosas conforme a los términos del programa.
             </p>
           </div>
 
@@ -840,6 +693,9 @@ export default function HomePage() {
               </a>
               <a href="https://workspace.google.com/intl/es-419/terms/promotion_code_terms/" target="_blank" rel="noopener noreferrer" className="hover:underline">
                 Términos de Códigos
+              </a>
+              <a href="/admin" className="text-slate-600 hover:text-slate-400">
+                Acceso Administrativo
               </a>
             </div>
           </div>
