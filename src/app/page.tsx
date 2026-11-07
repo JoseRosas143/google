@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   ShieldCheck, 
   Mail, 
@@ -17,6 +17,16 @@ import {
 } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
+interface PlanItem {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  currency: string;
+  description: string;
+  features: string[];
+}
+
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("Business Standard");
@@ -25,7 +35,75 @@ export default function HomePage() {
   const [leadSent, setLeadSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Registrar clic analítico en Supabase
+  // Estados dinámicos sincronizados con Supabase (con fallback)
+  const [heroTitle, setHeroTitle] = useState("Trabaja mejor. Colabora desde cualquier lugar con Google Workspace");
+  const [heroSubtitle, setHeroSubtitle] = useState("Profesionaliza la comunicación de tu empresa, organiza tus archivos con seguridad empresarial y potencia el trabajo en equipo con la asesoría de J R Consulting.");
+  const [promoTitle, setPromoTitle] = useState("¿Buscas un descuento exclusivo para tu empresa?");
+  const [promoSubtitle, setPromoSubtitle] = useState("J R Consulting cuenta con inventario de códigos promocionales para la región de América en Business Starter y Business Standard. Solicita información y te orientaremos en el proceso.");
+  
+  const [plans, setPlans] = useState<PlanItem[]>([
+    {
+      id: "1",
+      name: "Business Starter",
+      slug: "business-starter",
+      price: 6,
+      currency: "USD",
+      description: "Para profesionales independientes y pequeños equipos.",
+      features: [
+        "Correo electrónico empresarial personalizado",
+        "30 GB de almacenamiento por usuario",
+        "Videollamadas de hasta 100 participantes",
+        "Controles de seguridad y administración"
+      ]
+    },
+    {
+      id: "2",
+      name: "Business Standard",
+      slug: "business-standard",
+      price: 12,
+      currency: "USD",
+      description: "Para empresas que requieren mayor colaboración y espacio.",
+      features: [
+        "Todo lo incluido en Starter",
+        "2 TB de almacenamiento agrupado por usuario",
+        "Videollamadas de hasta 150 participantes",
+        "Grabación de reuniones en Google Drive"
+      ]
+    }
+  ]);
+
+  // Sincronizar contenidos y planes dinámicos desde Supabase
+  useEffect(() => {
+    const loadDynamicContent = async () => {
+      try {
+        // Cargar CMS
+        const { data: cmsData } = await supabase.from("site_content").select("*");
+        if (cmsData) {
+          const hero = cmsData.find(c => c.section_key === "hero");
+          if (hero?.title) setHeroTitle(hero.title);
+          if (hero?.subtitle) setHeroSubtitle(hero.subtitle);
+
+          const promo = cmsData.find(c => c.section_key === "promo_banner");
+          if (promo?.title) setPromoTitle(promo.title);
+          if (promo?.subtitle) setPromoSubtitle(promo.subtitle);
+        }
+
+        // Cargar Planes
+        const { data: plansData } = await supabase.from("plans").select("*").order("price", { ascending: true });
+        if (plansData && plansData.length > 0) {
+          setPlans(plansData.map(p => ({
+            ...p,
+            features: Array.isArray(p.features) ? p.features : []
+          })));
+        }
+      } catch (err) {
+        console.warn("Usando datos locales de respaldo:", err);
+      }
+    };
+
+    loadDynamicContent();
+  }, []);
+
   const trackReferralClick = async () => {
     try {
       await supabase.from("analytics_events").insert([
@@ -40,7 +118,6 @@ export default function HomePage() {
     }
   };
 
-  // Enviar prospecto real a la tabla 'leads' de Supabase
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -112,7 +189,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* HERO PRINCIPAL */}
+      {/* HERO PRINCIPAL DINÁMICO */}
       <main className="flex-1">
         <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 bg-gradient-to-b from-blue-50/50 via-white to-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,14 +202,11 @@ export default function HomePage() {
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                  Trabaja mejor. Colabora desde cualquier lugar con{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-800">
-                    Google Workspace
-                  </span>
+                  {heroTitle}
                 </h1>
 
                 <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-                  Profesionaliza la comunicación de tu empresa, organiza tus archivos con seguridad empresarial y potencia el trabajo en equipo con la asesoría de <strong>J R Consulting</strong>.
+                  {heroSubtitle}
                 </p>
 
                 {/* BOTONES OFICIALES */}
@@ -218,7 +292,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CONTENIDO ORIGINAL DE GOOGLE WORKSPACE */}
+        {/* CONTENIDO ORIGINAL EXACTO WORKSPACE */}
         <section id="workspace" className="py-16 bg-white border-y border-slate-200">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
@@ -347,124 +421,92 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* COMPARACIÓN DE PLANES */}
+        {/* COMPARACIÓN DINÁMICA DE PLANES (DESDE SUPABASE) */}
         <section id="planes" className="py-20 bg-white border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                Ediciones Oficiales
+                Catálogo de Ediciones
               </span>
               <h2 className="text-3xl font-extrabold text-slate-900 mt-3">Elige la edición ideal para tu equipo</h2>
-              <p className="text-slate-600 mt-2">Precios de referencia para la región conforme a las condiciones vigentes de Google.</p>
+              <p className="text-slate-600 mt-2">Planes configurados y actualizados desde el panel administrativo.</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Business Starter */}
-              <div className="border border-slate-200 rounded-3xl p-8 bg-white hover:border-slate-300 transition-all flex flex-col justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900">Business Starter</h3>
-                  <p className="text-sm text-slate-500 mt-1">Para profesionales independientes y pequeños equipos.</p>
-                  <div className="mt-6">
-                    <span className="text-4xl font-extrabold text-slate-900">$6.00 USD</span>
-                    <span className="text-slate-500 text-sm"> / usuario / mes</span>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {plans.map((plan, index) => {
+                const isPopular = plan.slug.includes("standard") || index === 1;
+
+                return (
+                  <div
+                    key={plan.id}
+                    className={`rounded-3xl p-8 flex flex-col justify-between transition-all ${
+                      isPopular
+                        ? "border-2 border-blue-600 bg-blue-50/20 shadow-xl relative"
+                        : "border border-slate-200 bg-white hover:border-slate-300"
+                    }`}
+                  >
+                    {isPopular && (
+                      <div className="absolute -top-3.5 right-8 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Recomendado
+                      </div>
+                    )}
+
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-900">{plan.name}</h3>
+                      <p className="text-sm text-slate-500 mt-1">{plan.description}</p>
+                      
+                      <div className="mt-6">
+                        <span className="text-4xl font-extrabold text-slate-900">${plan.price} {plan.currency}</span>
+                        <span className="text-slate-500 text-sm"> / usuario / mes</span>
+                      </div>
+
+                      <ul className="mt-6 space-y-3 text-sm text-slate-600 border-t border-slate-100 pt-6">
+                        {plan.features?.map((feat, i) => (
+                          <li key={i} className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mt-8 space-y-3">
+                      <button
+                        onClick={() => { setSelectedPlan(plan.name); setModalOpen(true); }}
+                        className={`w-full py-3 rounded-xl font-medium text-sm transition-all ${
+                          isPopular 
+                            ? "bg-slate-900 hover:bg-slate-800 text-white" 
+                            : "bg-blue-600 hover:bg-blue-700 text-white"
+                        }`}
+                      >
+                        Consultar Descuento
+                      </button>
+                      <a
+                        href="https://referworkspace.app.goo.gl/B9iH"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={trackReferralClick}
+                        className="w-full py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-sm flex items-center justify-center gap-2 transition-all"
+                      >
+                        <span>Registro Oficial B9iH</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
                   </div>
-
-                  <ul className="mt-6 space-y-3 text-sm text-slate-600 border-t border-slate-100 pt-6">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Correo electrónico empresarial personalizado
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> 30 GB de almacenamiento por usuario
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Videollamadas de hasta 100 participantes
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Controles de seguridad y administración
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="mt-8 space-y-3">
-                  <button
-                    onClick={() => { setSelectedPlan("Business Starter"); setModalOpen(true); }}
-                    className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-all"
-                  >
-                    Consultar Descuento Starter
-                  </button>
-                  <a
-                    href="https://referworkspace.app.goo.gl/B9iH"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={trackReferralClick}
-                    className="w-full py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-sm flex items-center justify-center gap-2 transition-all"
-                  >
-                    <span>Registro Oficial B9iH</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Business Standard */}
-              <div className="border-2 border-blue-600 rounded-3xl p-8 bg-blue-50/20 shadow-lg flex flex-col justify-between relative">
-                <div className="absolute -top-3.5 right-8 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  Más Popular
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900">Business Standard</h3>
-                  <p className="text-sm text-slate-500 mt-1">Para empresas que requieren mayor colaboración y espacio.</p>
-                  <div className="mt-6">
-                    <span className="text-4xl font-extrabold text-slate-900">$12.00 USD</span>
-                    <span className="text-slate-500 text-sm"> / usuario / mes</span>
-                  </div>
-
-                  <ul className="mt-6 space-y-3 text-sm text-slate-600 border-t border-blue-100 pt-6">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Todo lo incluido en Starter
-                    </li>
-                    <li className="flex items-center gap-2 font-semibold text-slate-900">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> 2 TB de almacenamiento agrupado por usuario
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Videollamadas de hasta 150 participantes
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Grabación de reuniones en Google Drive
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="mt-8 space-y-3">
-                  <button
-                    onClick={() => { setSelectedPlan("Business Standard"); setModalOpen(true); }}
-                    className="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-sm transition-all"
-                  >
-                    Consultar Descuento Standard
-                  </button>
-                  <a
-                    href="https://referworkspace.app.goo.gl/B9iH"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={trackReferralClick}
-                    className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm flex items-center justify-center gap-2 transition-all shadow"
-                  >
-                    <span>Registro Oficial B9iH</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* SECCIÓN DESCUENTOS Y BOTÓN OFICIAL GMAIL */}
+        {/* SECCIÓN DESCUENTOS Y BOTÓN GMAIL (DINÁMICO DESDE CMS) */}
         <section id="descuentos" className="py-20 bg-slate-900 text-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              ¿Buscas un descuento exclusivo para tu empresa?
+              {promoTitle}
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              J R Consulting cuenta con inventario de códigos promocionales para la región de América en Business Starter y Business Standard. Solicita información y te orientaremos en el proceso.
+              {promoSubtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
@@ -534,7 +576,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* MODAL DE SOLICITUD DE DESCUENTO */}
+      {/* MODAL SOLICITUD */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
           <div className="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl border border-slate-200 relative">
@@ -613,8 +655,9 @@ export default function HomePage() {
                         onChange={(e) => setSelectedPlan(e.target.value)}
                         className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                       >
-                        <option value="Business Starter">Business Starter</option>
-                        <option value="Business Standard">Business Standard</option>
+                        {plans.map(p => (
+                          <option key={p.id} value={p.name}>{p.name}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
