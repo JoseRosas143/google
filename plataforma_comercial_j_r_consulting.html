@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Workspace para Empresas | J R Consulting — Productividad y Crecimiento</title>
+  <meta name="description" content="Profesionalice la comunicación de su empresa con Google Workspace. Asesoría independiente de J R Consulting, comparativa de planes Business Starter y Standard, y gestión individual de promociones para clientes elegibles." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Google Workspace para Empresas | J R Consulting" />
+  <meta property="og:description" content="Acceda a correo corporativo @suempresa.com, almacenamiento en la nube y colaboración en tiempo real con la orientación de J R Consulting." />
+  <meta property="og:url" content="https://google-ref.jrconsulting.com.mx" />
+  <meta property="og:type" content="website" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              200: '#bae0fd',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49',
+              gold: '#d97706',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estilos personalizados y utilidades de microinteracción */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(51, 65, 85, 0.8);
+    }
+    .official-btn-container img {
+      transition: transform 0.2s ease, filter 0.2s ease;
+      display: inline-block;
+    }
+    .official-btn-container:hover img {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+    /* Estilos para el bloque original de Workspace preservando fidelidad */
+    .original-content-box {
+      border-left: 4px solid #0284c7;
+    }
+    /* Scrollbar sutil */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-sky-100 selection:text-sky-900 flex flex-col min-h-screen">
+
+  <!-- TOP BAR: Botón Maestro J R Consulting & Aviso de Plataforma -->
+  <div class="bg-slate-950 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <!-- BOTÓN OBLIGATORIO DE REGRESO AL PORTAL J R CONSULTING -->
+        <a 
+          href="https://jrconsulting.com.mx" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-sky-950 hover:bg-sky-900 text-sky-300 border border-sky-800 font-semibold tracking-wide transition-colors"
+          title="Visitar sitio corporativo de J R Consulting"
+        >
+          <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          <span>J R Consulting</span>
+        </a>
+        <span class="hidden sm:inline text-slate-500">|</span>
+        <span class="text-slate-400">Canal Autorizado de Referencias para Google Workspace (América)</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <span class="text-slate-400">Contacto: <a href="mailto:google-ref@jrconsulting.com.mx" class="text-sky-400 hover:underline">google-ref@jrconsulting.com.mx</a></span>
+        <!-- Switcher de Vistas para Verificación y Operación -->
+        <button 
+          id="toggleViewBtn" 
+          onclick="toggleAppView()" 
+          class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 font-medium transition"
+        >
+          <span id="viewBtnText">Entrar al Panel /admin</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVEGADOR PRINCIPAL -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo y Marca -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-sky-700 via-sky-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-sky-600/20 group-hover:scale-105 transition-transform">
+          JR
+        </div>
+        <div class="flex flex-col">
+          <span class="font-extrabold text-lg tracking-tight text-slate-900 group-hover:text-sky-700 transition-colors">J R Consulting</span>
+          <span class="text-[11px] font-medium uppercase tracking-wider text-slate-500">Workspace Growth Hub</span>
+        </div>
+      </a>
+
+      <!-- Menú de Navegación Pública -->
+      <nav id="publicNav" class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
+        <a href="#workspace" class="hover:text-sky-600 transition-colors">¿Qué es?</a>
+        <a href="#beneficios" class="hover:text-sky-600 transition-colors">Beneficios</a>
+        <a href="#planes" class="hover:text-sky-600 transition-colors">Planes</a>
+        <a href="#prueba" class="hover:text-sky-600 transition-colors">Prueba 14 Días</a>
+        <a href="#promociones" class="hover:text-sky-600 transition-colors">Descuentos</a>
+        <a href="#faq" class="hover:text-sky-600 transition-colors">Preguntas</a>
+        <a href="#contacto" class="hover:text-sky-600 transition-colors">Contacto</a>
+      </nav>
+
+      <!-- Botón de Acción Principal y Enlace a J R Consulting -->
+      <div class="flex items-center gap-3">
+        <!-- Enlace Corporativo -->
+        <a 
+          href="https://jrconsulting.com.mx" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="hidden lg:inline-flex items-center gap-1 text-xs font-semibold px-3 py-2 text-slate-700 hover:text-sky-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition"
+        >
+          J R Consulting ↗
+        </a>
+
+        <!-- CTA Directo al Único Enlace de Referencia -->
+        <a 
+          href="https://referworkspace.app.goo.gl/B9iH" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          onclick="logEvent('referral_click', { placement: 'navbar_cta' })"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 shadow-md shadow-sky-600/25 transition-all transform hover:-translate-y-0.5"
+        >
+          <span>Iniciar Registro</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </a>
+
+        <!-- Menú Móvil Botón -->
+        <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-600 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Menú desplegable móvil -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
+      <a href="#workspace" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-medium">¿Qué es Google Workspace?</a>
+      <a href="#beneficios" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-medium">Beneficios</a>
+      <a href="#planes" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-medium">Planes y Precios</a>
+      <a href="#prueba" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-medium">Prueba de 14 Días</a>
+      <a href="#promociones" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-medium">Consultar Descuento</a>
+      <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-medium">Preguntas Frecuentes</a>
+      <a href="#contacto" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-medium">Contacto</a>
+      <div class="pt-2 border-t border-slate-100 flex flex-col gap-2">
+        <a href="https://jrconsulting.com.mx" target="_blank" class="text-center py-2 text-sky-700 font-semibold bg-sky-50 rounded-lg">Visitar J R Consulting</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL: VISTA PÚBLICA / VISTA ADMIN -->
+  <main class="flex-grow">
+
+    <!-- ================================================================= -->
+    <!-- SECCIÓN 1: VISTA PÚBLICA (LANDING DE ALTA CONVERSIÓN)             -->
+    <!-- ================================================================= -->
+    <div id="publicView" class="space-y-24 pb-20">
+
+      <!-- HERO SECTION -->
+      <section id="hero" class="relative pt-12 pb-20 overflow-hidden bg-gradient-to-b from-sky-50/70 via-white to-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+              
+              <!-- Badge de Alianza y Programa -->
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-100 text-sky-800 text-xs font-semibold border border-sky-200">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Programa de Referidos de Google Workspace — J R Consulting</span>
+              </div>
+
+              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                Trabaja mejor. Colabora desde cualquier lugar. <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-indigo-600 to-sky-700">
+                  Lleva tu empresa al siguiente nivel.
+                </span>
+              </h1>
+
+              <p class="text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0">
+                Descubre Google Workspace y las herramientas empresariales que profesionalizan tu comunicación con correo corporativo <span class="font-mono text-sky-700 bg-sky-50 px-1 py-0.5 rounded text-sm font-semibold">usted@suempresa.com</span> y almacenamiento seguro en la nube.
+              </p>
+
+              <!-- CONTENEDOR DE LOS BOTONES OFICIALES PROPORCIONADOS -->
+              <div class="space-y-4 pt-2">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Acceso Directo Oficial:</p>
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                  
+                  <!-- BOTÓN GRÁFICO OFICIAL 1: REFERIDO DIRECTO -->
+                  <div class="official-btn-container">
+                    <a 
+                      href="https://referworkspace.app.goo.gl/B9iH" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label="Registrarse en Google Workspace mediante el enlace de referencia de J R Consulting"
+                      onclick="logEvent('referral_click', { source: 'hero_official_button' })"
+                      class="inline-block shadow-lg hover:shadow-xl rounded-xl transition duration-200 overflow-hidden"
+                    >
+                      <img 
+                        src="https://storage.googleapis.com/referworkspace-asset/img/digitalbuttons/digital_button_es_419.png" 
+                        alt="Registrarse en Google Workspace mediante el enlace de referencia" 
+                        loading="eager"
+                        style="max-width: 100%; height: auto;" 
+                        class="w-auto h-12 sm:h-14 object-contain"
+                      />
+                    </a>
+                  </div>
+
+                  <!-- BOTÓN GRÁFICO OFICIAL 2: GMAIL -->
+                  <div class="official-btn-container">
+                    <a 
+                      href="mailto:google@jrconsulting.com.mx"
+                      aria-label="Contactar a J R Consulting por correo electrónico"
+                      onclick="logEvent('gmail_button_click', { source: 'hero_official_gmail' })"
+                      class="inline-block shadow-lg hover:shadow-xl rounded-xl transition duration-200 overflow-hidden"
+                    >
+                      <img 
+                        src="https://storage.googleapis.com/referworkspace-asset/img/digitalbuttons/digital_button_gmail_es_419.png" 
+                        alt="Contactar a J R Consulting por Gmail" 
+                        loading="eager"
+                        style="max-width: 100%; height: auto;" 
+                        class="w-auto h-12 sm:h-14 object-contain"
+                      />
+                    </a>
+                  </div>
+
+                </div>
+
+                <div class="flex items-center justify-center lg:justify-start gap-6 text-xs text-slate-500 pt-1">
+                  <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    Prueba de 14 días (sujeta a elegibilidad Google)
+                  </span>
+                  <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    Sin compromiso inicial
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Columna Visual Mockup Interactivo -->
+            <div class="lg:col-span-5">
+              <div class="glass-card rounded-2xl p-6 shadow-2xl relative border border-slate-200">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                    <span class="text-xs font-mono text-slate-400 ml-2">jrconsulting-workspace.app</span>
+                  </div>
+                  <span class="text-xs font-semibold text-sky-700 bg-sky-50 px-2 py-0.5 rounded">Asesoría Activa</span>
+                </div>
+
+                <div class="mt-5 space-y-4">
+                  <!-- Tarjeta simulada de identidad -->
+                  <div class="p-4 rounded-xl bg-slate-900 text-white space-y-2">
+                    <p class="text-xs text-slate-400 uppercase font-semibold">Identidad de Marca Corporativa</p>
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm font-bold text-white">usted@suempresa.com</p>
+                        <p class="text-xs text-sky-300">Impulsado por infraestructura Gmail</p>
+                      </div>
+                      <span class="px-2 py-1 bg-emerald-500/20 text-emerald-300 text-xs font-medium rounded">Dominio Propio</span>
+                    </div>
+                  </div>
+
+                  <!-- Mini tarjeta orientadora de plan -->
+                  <div class="p-4 rounded-xl bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-100 space-y-3">
+                    <div class="flex justify-between items-center">
+                      <span class="text-xs font-bold text-slate-800">¿Desea solicitar un descuento?</span>
+                      <span class="text-[10px] font-semibold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">Promociones para América</span>
+                    </div>
+                    <p class="text-xs text-slate-600">
+                      Disponemos de promociones para Business Starter y Business Standard. Solicite revisión personalizada.
+                    </p>
+                    <button 
+                      onclick="openLeadModal('General')"
+                      class="w-full py-2 px-3 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition shadow-sm"
+                    >
+                      Consultar descuento disponible
+                    </button>
+                  </div>
+
+                  <div class="text-center text-[11px] text-slate-400">
+                    J R Consulting — Asesoría y acompañamiento en digitalización
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECCIÓN 2: CONTENIDO COMERCIAL ORIGINAL DE GOOGLE WORKSPACE       -->
+      <!-- Integración estricta del bloque HTML obligatorio (Sección 4.1)    -->
+      <!-- ================================================================= -->
+      <section id="workspace" class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="glass-card rounded-2xl p-8 sm:p-10 shadow-lg border border-slate-200/90 relative overflow-hidden">
+          
+          <div class="flex items-center gap-2 mb-6">
+            <span class="px-3 py-1 rounded-md bg-sky-100 text-sky-800 text-xs font-bold uppercase tracking-wider">
+              Documento Informativo Oficial
+            </span>
+            <span class="text-xs text-slate-400">Referencia de Campaña J R Consulting</span>
+          </div>
+
+          <!-- BLOQUE DE TEXTO ORIGINAL CONSERVADO ÍNTEGRAMENTE -->
+          <div class="original-content-box pl-6 space-y-5 text-slate-700 leading-relaxed">
+            
+            <p class="text-lg font-medium text-slate-900">
+              ¿Qué es Google&nbsp;Workspace?<br>
+              <span class="text-base font-normal text-slate-700">
+                Google&nbsp;Workspace es un paquete de productividad basado en la nube que ayuda a los equipos a comunicarse, colaborar y realizar tareas en cualquier lugar y en cualquier dispositivo. Es sencillo de configurar, usar y administrar, por lo que su empresa se puede enfocar en lo que realmente importa.
+              </span>
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 text-sm font-semibold pt-1">
+              <a 
+                href="https://www.youtube.com/c/googleworkspace" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-rose-600 hover:text-rose-700 underline underline-offset-4 decoration-rose-300"
+                onclick="logEvent('resource_click', { resource: 'youtube_official' })"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                Mire un video
+              </a>
+              <span class="text-slate-300">•</span>
+              <a 
+                href="https://referworkspace.app.goo.gl/one-pager" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-sky-600 hover:text-sky-700 underline underline-offset-4 decoration-sky-300"
+                onclick="logEvent('resource_click', { resource: 'one_pager_official' })"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                descubra más aquí
+              </a>
+            </div>
+
+            <div class="pt-2">
+              <p class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-3">Estos son algunos aspectos destacados:</p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                  <b class="text-slate-900 block mb-1">Correo electrónico empresarial para su dominio</b>
+                  <p class="text-xs text-slate-600">Luzca profesional y comuníquese como usted@suempresa.com. Las funciones sencillas de Gmail lo ayudan a desarrollar su marca mientras realiza más tareas.</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                  <b class="text-slate-900 block mb-1">Acceso desde cualquier ubicación o dispositivo</b>
+                  <p class="text-xs text-slate-600">Revise correos electrónicos, comparta archivos, edite documentos, organice videoconferencias y mucho más en el trabajo, en casa o dondequiera que esté. Puede retomar su actividad donde la dejó en una computadora, tablet o un teléfono.</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                  <b class="text-slate-900 block mb-1">Herramientas de administración de nivel empresarial</b>
+                  <p class="text-xs text-slate-600">La configuración de administración sólida le otorga el control total sobre los usuarios, los dispositivos, la seguridad y otros aspectos.</p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Párrafo final con el vínculo de referencia exacto -->
+            <div class="pt-4 p-4 rounded-xl bg-sky-50/80 border border-sky-100">
+              <p class="text-sm text-slate-800">
+                Regístrese con mi vínculo
+                <a class="referral__link font-semibold text-sky-700 hover:text-sky-800 underline decoration-sky-400" href="https://referworkspace.app.goo.gl/B9iH" target="_blank" rel="noopener noreferrer">https://referworkspace.app.goo.gl/B9iH</a>
+                a fin de obtener una prueba de 14 días y envíeme un mensaje si desea recibir un descuento exclusivo cuando pruebe Google&nbsp;Workspace para su empresa.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-400">
+            * Nota de transparencia de J R Consulting: La prueba de 14 días y los descuentos promocionales están sujetos a la aprobación y términos y condiciones vigentes fijados por Google.
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECCIÓN 3: BENEFICIOS COMERCIALES & PROPUESTA DE VALOR           -->
+      <!-- ================================================================= -->
+      <section id="beneficios" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-sky-600">¿Por qué Google Workspace con J R Consulting?</h2>
+          <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Productividad inteligente que impulsa el crecimiento de su empresa</p>
+          <p class="text-slate-600 text-sm">Centralice la comunicación, resguarde sus activos digitales y fomente la agilidad en equipo con herramientas probadas a escala global.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Beneficio 1 -->
+          <div class="glass-card p-6 rounded-2xl hover:border-sky-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-110 transition">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Correo Corporativo Propio</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Comuníquese bajo la dirección <span class="font-mono text-xs font-semibold text-slate-800">contacto@tuempresa.com</span>. Genere confianza inmediata y cuente con la robustez y filtro antispam líder de Gmail.
+            </p>
+          </div>
+
+          <!-- Beneficio 2 -->
+          <div class="glass-card p-6 rounded-2xl hover:border-sky-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-5 group-hover:scale-110 transition">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Colaboración en Tiempo Real</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Google Docs, Sheets y Slides permiten a múltiples integrantes editar simultáneamente, comentar y mantener un historial de versiones seguro y transparente.
+            </p>
+          </div>
+
+          <!-- Beneficio 3 -->
+          <div class="glass-card p-6 rounded-2xl hover:border-sky-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-5 group-hover:scale-110 transition">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 4h16"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Almacenamiento en la Nube</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Desde 30 GB por usuario en Starter hasta 2 TB compartidos en Standard mediante Google Drive corporativo con permisos centralizados.
+            </p>
+          </div>
+
+          <!-- Beneficio 4 -->
+          <div class="glass-card p-6 rounded-2xl hover:border-sky-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-110 transition">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Videollamadas con Google Meet</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Reuniones seguras de hasta 100 participantes (Starter) o 150 participantes con grabación en Drive (Standard), sin instalar software complejo.
+            </p>
+          </div>
+
+          <!-- Beneficio 5 -->
+          <div class="glass-card p-6 rounded-2xl hover:border-sky-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-5 group-hover:scale-110 transition">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Consola de Control Total</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Gestione altas y bajas de personal, obligue la verificación en dos pasos (2FA) y controle el acceso desde dispositivos móviles fácilmente.
+            </p>
+          </div>
+
+          <!-- Beneficio 6 -->
+          <div class="glass-card p-6 rounded-2xl hover:border-sky-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center mb-5 group-hover:scale-110 transition">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Acompañamiento J R Consulting</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              No se queda solo. Le orientamos en la elección del plan idóneo, gestión de cupones y mejores prácticas de configuración tecnológica.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECCIÓN 4: COMPARATIVA DE PLANES (STARTER VS STANDARD)            -->
+      <!-- ================================================================= -->
+      <section id="planes" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <span class="px-3 py-1 rounded-full bg-slate-200 text-slate-700 text-xs font-bold uppercase tracking-wider">Ediciones Oficiales</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Elija la edición ideal para su organización</h2>
+          <p class="text-slate-600 text-sm">Precios de referencia oficiales en México y América Latina (pago por usuario/mes). Consulte promociones vigentes.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          
+          <!-- Plan 1: Business Starter -->
+          <div class="glass-card rounded-3xl p-8 border-2 border-slate-200 hover:border-sky-300 transition shadow-lg relative flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <span class="text-xs font-bold uppercase text-sky-600 tracking-wider">Profesionales y Pequeños Equipos</span>
+                  <h3 class="text-2xl font-extrabold text-slate-900 mt-1">Business Starter</h3>
+                </div>
+                <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">Básico & Ágil</span>
+              </div>
+
+              <p class="text-slate-600 text-sm mb-6">
+                Diseñado para emprendedores y empresas que necesitan presencia profesional inmediata con correo propio y almacenamiento seguro.
+              </p>
+
+              <!-- Precio oficial verificado -->
+              <div class="mb-6 p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-baseline gap-2">
+                <span class="text-4xl font-extrabold text-slate-900">$6.00</span>
+                <span class="text-xs font-semibold text-slate-500">USD / usuario al mes*</span>
+              </div>
+
+              <!-- Lista de características -->
+              <ul class="space-y-3 text-sm text-slate-600 mb-8">
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span><b>Correo empresarial personalizado</b> (@suempresa.com)</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span><b>30 GB de almacenamiento</b> por usuario en la nube</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Videollamadas de hasta <b>100 participantes</b></span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Controles de seguridad y administración estándar</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Asistencia estándar de Google</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="space-y-3 pt-4 border-t border-slate-100">
+              <a 
+                href="https://referworkspace.app.goo.gl/B9iH" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onclick="logEvent('referral_click', { plan: 'Business Starter' })"
+                class="w-full inline-flex items-center justify-center py-3 px-4 rounded-xl font-bold text-sm text-slate-800 bg-slate-100 hover:bg-slate-200 transition"
+              >
+                Comenzar prueba en Business Starter
+              </a>
+              <button 
+                onclick="openLeadModal('Business Starter')"
+                class="w-full inline-flex items-center justify-center py-3 px-4 rounded-xl font-bold text-sm text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition"
+              >
+                Solicitar código de descuento Starter
+              </button>
+            </div>
+          </div>
+
+          <!-- Plan 2: Business Standard -->
+          <div class="glass-card rounded-3xl p-8 border-2 border-sky-500 hover:border-sky-600 transition shadow-xl relative flex flex-col justify-between ring-4 ring-sky-500/10">
+            <div class="absolute -top-3.5 right-6 px-3 py-1 bg-gradient-to-r from-sky-600 to-indigo-600 text-white text-xs font-bold uppercase rounded-full shadow-md tracking-wider">
+              Más Recomendado
+            </div>
+
+            <div>
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <span class="text-xs font-bold uppercase text-sky-600 tracking-wider">Equipos en Crecimiento</span>
+                  <h3 class="text-2xl font-extrabold text-slate-900 mt-1">Business Standard</h3>
+                </div>
+              </div>
+
+              <p class="text-slate-600 text-sm mb-6">
+                Potencia ampliada con almacenamiento masivo de 2 TB por usuario, grabación de reuniones de Meet y unidades compartidas para el equipo.
+              </p>
+
+              <!-- Precio oficial verificado -->
+              <div class="mb-6 p-4 rounded-xl bg-sky-50 border border-sky-100 flex items-baseline gap-2">
+                <span class="text-4xl font-extrabold text-slate-900">$12.00</span>
+                <span class="text-xs font-semibold text-slate-600">USD / usuario al mes*</span>
+              </div>
+
+              <!-- Lista de características -->
+              <ul class="space-y-3 text-sm text-slate-600 mb-8">
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span><b>Todo lo de Business Starter</b> más:</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span><b>2 TB de almacenamiento compartido</b> por usuario</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Reuniones de hasta <b>150 participantes + Grabación en Drive</b></span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span><b>Unidades de equipo compartidas</b> (Shared Drives)</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Cancelación de ruido en Meet y controles avanzados</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="space-y-3 pt-4 border-t border-slate-100">
+              <a 
+                href="https://referworkspace.app.goo.gl/B9iH" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onclick="logEvent('referral_click', { plan: 'Business Standard' })"
+                class="w-full inline-flex items-center justify-center py-3 px-4 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 transition shadow-md shadow-sky-600/25"
+              >
+                Comenzar prueba en Business Standard
+              </a>
+              <button 
+                onclick="openLeadModal('Business Standard')"
+                class="w-full inline-flex items-center justify-center py-3 px-4 rounded-xl font-bold text-sm text-sky-800 bg-sky-100 hover:bg-sky-200 border border-sky-300 transition"
+              >
+                Solicitar código de descuento Standard
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="text-center text-xs text-slate-400 mt-6 max-w-2xl mx-auto">
+          * Precios de lista informados por Google para nuevos clientes. Los montos pueden variar por país, régimen fiscal e impuestos locales. Última verificación: Noviembre 2026.
+        </p>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECCIÓN 5: PROCEDIMIENTO EN 3 PASOS (PRUEBA 14 DÍAS)              -->
+      <!-- ================================================================= -->
+      <section id="prueba" class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+          
+          <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+            <span class="px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs font-bold uppercase tracking-wider border border-sky-500/30">
+              Proceso Simplificado
+            </span>
+            <h2 class="text-3xl font-extrabold tracking-tight">Cómo empezar su prueba de 14 días</h2>
+            <p class="text-slate-400 text-sm">
+              Siga estos sencillos pasos para activar su entorno de trabajo colaborativo sin fricción.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+            
+            <div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700/60 space-y-3">
+              <div class="w-10 h-10 rounded-lg bg-sky-500/20 text-sky-400 font-extrabold flex items-center justify-center border border-sky-500/30">
+                1
+              </div>
+              <h3 class="text-lg font-bold text-white">Explora y Elige</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Determine si su equipo requiere la ligereza de Business Starter (30 GB) o el poder colaborativo de Business Standard (2 TB y grabaciones).
+              </p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700/60 space-y-3">
+              <div class="w-10 h-10 rounded-lg bg-sky-500/20 text-sky-400 font-extrabold flex items-center justify-center border border-sky-500/30">
+                2
+              </div>
+              <h3 class="text-lg font-bold text-white">Regístrese Oficialmente</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Inicie su registro con nuestro enlace de referencia centralizado para vincular el acompañamiento de J R Consulting.
+              </p>
+              <div class="pt-2">
+                <a 
+                  href="https://referworkspace.app.goo.gl/B9iH" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onclick="logEvent('referral_click', { placement: 'step_2' })"
+                  class="text-xs font-semibold text-sky-400 hover:text-sky-300 underline"
+                >
+                  Ir al enlace oficial B9iH →
+                </a>
+              </div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-slate-800/60 border border-slate-700/60 space-y-3">
+              <div class="w-10 h-10 rounded-lg bg-sky-500/20 text-sky-400 font-extrabold flex items-center justify-center border border-sky-500/30">
+                3
+              </div>
+              <h3 class="text-lg font-bold text-white">Solicite su Descuento</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Envíenos un mensaje indicando su interés. Si califica según las políticas de Google en América, le proveeremos un código promocional único y privado.
+              </p>
+              <div class="pt-2">
+                <button 
+                  onclick="openLeadModal('Step3')" 
+                  class="text-xs font-semibold text-amber-400 hover:text-amber-300 underline"
+                >
+                  Consultar disponibilidad →
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="mt-12 text-center pt-8 border-t border-slate-700/60">
+            <a 
+              href="https://referworkspace.app.goo.gl/B9iH" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onclick="logEvent('referral_click', { placement: 'step_footer' })"
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-slate-900 bg-white hover:bg-slate-100 transition shadow-xl"
+            >
+              <span>Comenzar Prueba de 14 Días Ahora</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECCIÓN 6: GESTIÓN DE PROMOCIONES Y FORMULARIO PRIVADO            -->
+      <!-- ================================================================= -->
+      <section id="promociones" class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="glass-card rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-7 space-y-4">
+            <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider">
+              Beneficio Exclusivo J R Consulting
+            </span>
+            <h2 class="text-3xl font-extrabold text-slate-900">¿Busca un descuento promocional para su empresa?</h2>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Disponemos de un inventario privado y limitado de códigos de descuento para clientes elegibles en el continente americano.
+            </p>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Por políticas estrictas del programa de Google Workspace, los códigos no se publican de forma masiva en la web ni se intercambian. Cada solicitud se valida individualmente para asignarle el código correspondiente a su edición deseada (Starter o Standard).
+            </p>
+
+            <div class="pt-2 flex flex-wrap gap-4">
+              <button 
+                onclick="openLeadModal('BannerPromociones')"
+                class="px-6 py-3 rounded-xl font-bold text-sm text-white bg-sky-600 hover:bg-sky-700 shadow-md transition"
+              >
+                Consultar Descuento Disponible
+              </button>
+              <a 
+                href="mailto:google@jrconsulting.com.mx?subject=Consulta%20Descuento%20Google%20Workspace"
+                class="px-5 py-3 rounded-xl font-semibold text-sm text-slate-700 bg-slate-100 hover:bg-slate-200 transition"
+              >
+                Enviar correo directo
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 bg-slate-50 p-6 rounded-2xl border border-slate-200 text-xs text-slate-600 space-y-3">
+            <h4 class="font-bold text-slate-900 uppercase tracking-wider text-[11px]">Condiciones de Asignación:</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2">
+                <span class="text-sky-600 font-bold">•</span>
+                <span>Aplica exclusivamente para nuevas cuentas y suscripciones de Google Workspace.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-sky-600 font-bold">•</span>
+                <span>Clientes ubicados en países elegibles del continente americano.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-sky-600 font-bold">•</span>
+                <span>Uso único por dominio empresarial.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-sky-600 font-bold">•</span>
+                <span>La entrega se realiza de forma confidencial vía correo o enlace cifrado.</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECCIÓN 7: PREGUNTAS FRECUENTES (FAQ)                            -->
+      <!-- ================================================================= -->
+      <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12 space-y-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Resolución de Dudas</span>
+          <h2 class="text-3xl font-extrabold text-slate-900">Preguntas Frecuentes</h2>
+          <p class="text-slate-600 text-sm">Todo lo que necesita saber sobre el programa, los planes y el acompañamiento.</p>
+        </div>
+
+        <div class="space-y-4" id="faqAccordion">
+          
+          <!-- Item 1 -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-200 cursor-pointer" onclick="toggleFaq(1)">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-bold text-slate-900">¿Qué es Google Workspace y en qué se diferencia del Gmail gratuito?</h3>
+              <span id="faqIcon1" class="text-slate-400 font-bold text-lg">+</span>
+            </div>
+            <div id="faqAnswer1" class="hidden mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Google Workspace ofrece la suite completa de Google (Gmail, Drive, Meet, Docs, Sheets) pero asociada al dominio personalizado de su empresa (ej. usted@suempresa.com), con almacenamiento ampliado, consola de administración de seguridad centralizada y soporte para empresas sin publicidad.
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-200 cursor-pointer" onclick="toggleFaq(2)">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-bold text-slate-900">¿Cómo funciona la prueba gratuita de 14 días?</h3>
+              <span id="faqIcon2" class="text-slate-400 font-bold text-lg">+</span>
+            </div>
+            <div id="faqAnswer2" class="hidden mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Al registrarse a través de nuestro enlace oficial, Google le otorga un periodo de prueba de 14 días para explorar las funciones de Business Starter o Standard. No se cobrará nada durante dicho periodo si decide cancelar antes de que culmine.
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-200 cursor-pointer" onclick="toggleFaq(3)">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-bold text-slate-900">¿Cuál es la diferencia entre Business Starter y Business Standard?</h3>
+              <span id="faqIcon3" class="text-slate-400 font-bold text-lg">+</span>
+            </div>
+            <div id="faqAnswer3" class="hidden mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Business Starter ofrece 30 GB de almacenamiento por usuario y reuniones de hasta 100 personas. Business Standard eleva el almacenamiento a 2 TB por usuario, permite grabar reuniones de Google Meet en Drive y añade carpetas de equipo compartidas (Shared Drives).
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-200 cursor-pointer" onclick="toggleFaq(4)">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-bold text-slate-900">¿Por qué los códigos de descuento no se muestran públicamente?</h3>
+              <span id="faqIcon4" class="text-slate-400 font-bold text-lg">+</span>
+            </div>
+            <div id="faqAnswer4" class="hidden mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Las normas del Programa de Referencias de Google prohíben la distribución masiva o pública de códigos promocionales. Los cupones son de un solo uso por cliente elegible y deben ser entregados individualmente previa verificación.
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="glass-card rounded-2xl p-5 border border-slate-200 cursor-pointer" onclick="toggleFaq(5)">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-bold text-slate-900">¿Necesito tener mi dominio web previamente registrado?</h3>
+              <span id="faqIcon5" class="text-slate-400 font-bold text-lg">+</span>
+            </div>
+            <div id="faqAnswer5" class="hidden mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Puede utilizar un dominio que ya posea (ej. mipyme.com) o adquirir uno directamente durante el proceso de registro guiado en Google Workspace.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- SECCIÓN 8: CONTACTO Y RECURSOS OFICIALES                          -->
+      <!-- ================================================================= -->
+      <section id="contacto" class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="glass-card rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-xl">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            <div class="lg:col-span-6 space-y-6">
+              <div class="space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-sky-600">Contacto Directo</span>
+                <h2 class="text-3xl font-extrabold text-slate-900">Estamos a su servicio</h2>
+                <p class="text-sm text-slate-600">
+                  Si tiene preguntas técnicas, dudas sobre el proceso de facturación o desea orientación sobre la migración de su correo corporativo, contáctenos.
+                </p>
+              </div>
+
+              <!-- BOTÓN GRÁFICO OFICIAL EN SECCIÓN DE CONTACTO -->
+              <div class="space-y-3 pt-2">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Escribir por correo oficial:</p>
+                <div class="official-btn-container">
+                  <a 
+                    href="mailto:google@jrconsulting.com.mx"
+                    aria-label="Contactar a J R Consulting por correo electrónico"
+                    onclick="logEvent('gmail_button_click', { placement: 'contact_section' })"
+                    class="inline-block shadow-md hover:shadow-lg rounded-xl overflow-hidden"
+                  >
+                    <img 
+                      src="https://storage.googleapis.com/referworkspace-asset/img/digitalbuttons/digital_button_gmail_es_419.png" 
+                      alt="Contactar a J R Consulting por Gmail" 
+                      loading="lazy"
+                      style="max-width: 100%; height: auto;" 
+                      class="w-auto h-12"
+                    />
+                  </a>
+                </div>
+              </div>
+
+              <div class="pt-4 space-y-2 text-xs text-slate-500">
+                <p><b>Razón Comercial:</b> J R Consulting</p>
+                <p><b>Correo de Soporte:</b> <a href="mailto:google-ref@jrconsulting.com.mx" class="text-sky-600 hover:underline">google-ref@jrconsulting.com.mx</a></p>
+                <p><b>Portal Central:</b> <a href="https://jrconsulting.com.mx" target="_blank" class="text-sky-600 hover:underline">https://jrconsulting.com.mx</a></p>
+                <p><b>Territorio de Cobertura:</b> México y Continente Americano</p>
+              </div>
+            </div>
+
+            <!-- Formulario de Contacto Rápido -->
+            <div class="lg:col-span-6 bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200">
+              <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nombre Completo *</label>
+                  <input type="text" id="contactName" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="Juan Pérez">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Correo Electrónico *</label>
+                  <input type="email" id="contactEmail" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="juan@miempresa.com">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Empresa / Organización</label>
+                  <input type="text" id="contactCompany" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="Mi Empresa S.A.">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mensaje o Consulta *</label>
+                  <textarea id="contactMessage" rows="3" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="Deseo información sobre la migración a Business Standard..."></textarea>
+                </div>
+                <div class="flex items-start gap-2 pt-1">
+                  <input type="checkbox" id="contactConsent" required class="mt-1 rounded text-sky-600 focus:ring-sky-500">
+                  <label for="contactConsent" class="text-[11px] text-slate-500">
+                    Acepto la política de privacidad y autorizo a J R Consulting a contactarme respecto a Google Workspace.
+                  </label>
+                </div>
+                <button type="submit" class="w-full py-3 px-4 rounded-xl font-bold text-sm text-white bg-slate-900 hover:bg-slate-800 transition">
+                  Enviar Mensaje a J R Consulting
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN DE FUENTES OFICIALES Y DOCUMENTACIÓN DE PROGRAMA -->
+      <section class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="p-6 rounded-2xl bg-slate-100 border border-slate-200 text-xs text-slate-600 space-y-4">
+          <p class="font-bold text-slate-800 uppercase tracking-wider text-[11px]">Fuentes Oficiales y Normatividad de Consulta:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <a href="https://workspace.google.com/intl/es-419_mx/landing/partners/referral/terms/?utm_source=dashboard&utm_medium=email&utm_campaign=monthly&utm_term=terms&utm_content=mx" target="_blank" rel="noopener noreferrer" class="text-sky-700 hover:underline flex items-center gap-1">
+              <span>• Términos del Programa de Referidos</span>
+            </a>
+            <a href="https://workspace.google.com/intl/es-419/terms/promotion_code_terms/?utm_source=dashboard&utm_medium=email&utm_campaign=monthly&utm_term=terms_conditions&utm_content=mx" target="_blank" rel="noopener noreferrer" class="text-sky-700 hover:underline flex items-center gap-1">
+              <span>• Términos de Códigos Promocionales</span>
+            </a>
+            <a href="https://workspace.google.com/intl/es-419_mx/landing/partners/referral/faqs.html" target="_blank" rel="noopener noreferrer" class="text-sky-700 hover:underline flex items-center gap-1">
+              <span>• Preguntas Frecuentes Oficiales</span>
+            </a>
+            <a href="https://workspace.google.com/intl/es-419_mx/landing/partners/referral/countries.html" target="_blank" rel="noopener noreferrer" class="text-sky-700 hover:underline flex items-center gap-1">
+              <span>• Países Participantes</span>
+            </a>
+            <a href="https://www.google.com/permissions/" target="_blank" rel="noopener noreferrer" class="text-sky-700 hover:underline flex items-center gap-1">
+              <span>• Políticas de Marca Google</span>
+            </a>
+            <a href="https://workspace.google.com/terms/user_features.html" target="_blank" rel="noopener noreferrer" class="text-sky-700 hover:underline flex items-center gap-1">
+              <span>• Características de Google Workspace</span>
+            </a>
+          </div>
+          <!-- Identificación de recursos informativos internos c.gle sin convertirlos en registro -->
+          <div class="pt-2 border-t border-slate-200 text-[11px] text-slate-500">
+            <span>Materiales de referencia interna del programa: </span>
+            <span class="font-mono text-[10px] text-slate-600 bg-white px-1.5 py-0.5 rounded border border-slate-200">Recurso Informativo 1 (c.gle/AGSJx...)</span> y 
+            <span class="font-mono text-[10px] text-slate-600 bg-white px-1.5 py-0.5 rounded border border-slate-200">Recurso Informativo 2 (c.gle/AGSJx...)</span>
+            <span class="italic text-slate-400"> (Consignados únicamente para consulta técnica interna conforme a la cláusula 2).</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- SECCIÓN 2: PANEL ADMINISTRATIVO PRIVADO (/admin)                  -->
+    <!-- Gestión centralizada, Bóveda Privada de Códigos, CRM y Analítica  -->
+    <!-- ================================================================= -->
+    <div id="adminView" class="hidden min-h-[85vh] bg-slate-900 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- Header del Panel -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
+          <div>
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 rounded bg-sky-500/20 text-sky-400 font-mono text-xs font-bold border border-sky-500/30">
+                /admin &mdash; Bóveda y Control
+              </span>
+              <span class="text-xs text-slate-400">J R Consulting Platform Suite</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Panel de Control & Gestión de Promociones</h1>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button onclick="toggleAppView()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
+              ← Volver a la Landing Pública
+            </button>
+            <button onclick="showToast('Sesión administrativa verificada (Modo de Operación Seguro)', 'success')" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition">
+              Auditar Estado
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Metrics Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/70">
+            <span class="text-xs font-bold uppercase text-slate-400">Visitas Registradas</span>
+            <p id="kpiVisits" class="text-3xl font-extrabold text-white mt-2">1,284</p>
+            <span class="text-[11px] text-emerald-400 font-medium">↑ +14% este mes</span>
+          </div>
+
+          <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/70">
+            <span class="text-xs font-bold uppercase text-slate-400">Clics Enlace B9iH</span>
+            <p id="kpiClicks" class="text-3xl font-extrabold text-sky-400 mt-2">187</p>
+            <span id="kpiCTR" class="text-[11px] text-slate-400 font-mono">CTR: 14.56%</span>
+          </div>
+
+          <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/70">
+            <span class="text-xs font-bold uppercase text-slate-400">Solicitudes de Descuento</span>
+            <p id="kpiLeads" class="text-3xl font-extrabold text-amber-400 mt-2">12</p>
+            <span class="text-[11px] text-amber-300/80 font-medium">Pendientes de validar: 3</span>
+          </div>
+
+          <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/70">
+            <span class="text-xs font-bold uppercase text-slate-400">Inventario Códigos Activos</span>
+            <p id="kpiCodes" class="text-3xl font-extrabold text-emerald-400 mt-2">4</p>
+            <span class="text-[11px] text-slate-400 font-mono">América (Starter & Standard)</span>
+          </div>
+
+        </div>
+
+        <!-- Pestañas Administrativas -->
+        <div class="flex border-b border-slate-800 gap-6 text-sm font-semibold">
+          <button onclick="switchAdminTab('codigos')" id="tabBtnCodigos" class="pb-3 border-b-2 border-sky-500 text-sky-400">
+            Bóveda de Códigos Privados
+          </button>
+          <button onclick="switchAdminTab('prospectos')" id="tabBtnProspectos" class="pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
+            Gestión de Prospectos (CRM)
+          </button>
+          <button onclick="switchAdminTab('enlaces')" id="tabBtnEnlaces" class="pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
+            Enlace de Referencia Único
+          </button>
+          <button onclick="switchAdminTab('planes_admin')" id="tabBtnPlanes" class="pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
+            Precios y Configuración
+          </button>
+        </div>
+
+        <!-- PESTAÑA 1: BÓVEDA PRIVADA DE CÓDIGOS -->
+        <div id="tabContentCodigos" class="space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-bold text-white">Inventario Privado de Códigos Promocionales</h2>
+              <p class="text-xs text-slate-400">
+                Los códigos son de uso individual, confidencial y restringido para América. Jamás expuestos en el HTML público.
+              </p>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              <button 
+                id="unmaskBtn" 
+                onclick="toggleCodeMasking()" 
+                class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-xs font-bold transition flex items-center gap-1.5"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                <span id="unmaskText">Revelar Códigos (Acceso Admin)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- TABLA DE INVENTARIO -->
+          <div class="bg-slate-800/60 rounded-2xl border border-slate-700/80 overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-800/90 text-slate-300 font-bold uppercase tracking-wider border-b border-slate-700">
+                  <tr>
+                    <th class="p-4">Identificador</th>
+                    <th class="p-4">Código (Cifrado / Bóveda)</th>
+                    <th class="p-4">Edición</th>
+                    <th class="p-4">Territorio</th>
+                    <th class="p-4">Estado</th>
+                    <th class="p-4">Prospecto Asignado</th>
+                    <th class="p-4 text-right">Acción Atómica</th>
+                  </tr>
+                </thead>
+                <tbody id="codesTableBody" class="divide-y divide-slate-700/60 font-mono">
+                  <!-- Renderizado dinámico desde memoria controlada -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 2: GESTIÓN DE PROSPECTOS (CRM) -->
+        <div id="tabContentProspectos" class="hidden space-y-6">
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-lg font-bold text-white">Prospectos y Solicitudes de Promoción</h2>
+              <p class="text-xs text-slate-400">Verifique elegibilidad antes de realizar una asignación atómica de código.</p>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/60 rounded-2xl border border-slate-700/80 overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-800/90 text-slate-300 font-bold uppercase tracking-wider border-b border-slate-700">
+                  <tr>
+                    <th class="p-4">Fecha</th>
+                    <th class="p-4">Nombre y Empresa</th>
+                    <th class="p-4">Correo</th>
+                    <th class="p-4">Plan Solicitado</th>
+                    <th class="p-4">Estado CRM</th>
+                    <th class="p-4">Código Vinculado</th>
+                    <th class="p-4 text-right">Gestión</th>
+                  </tr>
+                </thead>
+                <tbody id="leadsTableBody" class="divide-y divide-slate-700/60">
+                  <!-- Renderizado dinámico -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 3: GESTIÓN DEL ENLACE ÚNICO -->
+        <div id="tabContentEnlaces" class="hidden space-y-6">
+          <div class="max-w-2xl bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-4">
+            <h2 class="text-lg font-bold text-white">Configuración del Enlace Maestro de Referencia</h2>
+            <p class="text-xs text-slate-300">
+              Conforme a la sección 2 del manual maestro, este es el <b>ÚNICO</b> enlace de registro válido autorizado.
+            </p>
+
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+              <span class="text-xs font-mono text-slate-400">Identificador Central en Base de Datos:</span>
+              <p class="font-mono text-xs text-sky-400">google-workspace-main-referral</p>
+              
+              <div class="pt-2">
+                <label class="block text-xs text-slate-400 uppercase font-semibold mb-1">Destino Oficial Único:</label>
+                <input 
+                  type="text" 
+                  id="mainReferralInput" 
+                  value="https://referworkspace.app.goo.gl/B9iH" 
+                  readonly 
+                  class="w-full bg-slate-950 border border-slate-700 text-sky-300 font-mono text-sm px-3.5 py-2 rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 pt-2">
+              <button 
+                onclick="copyToClipboard('https://referworkspace.app.goo.gl/B9iH'); showToast('Enlace B9iH copiado con éxito', 'success')" 
+                class="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition"
+              >
+                Copiar Enlace
+              </button>
+              <a 
+                href="https://referworkspace.app.goo.gl/B9iH" 
+                target="_blank" 
+                class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold transition"
+              >
+                Probar en pestaña nueva ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 4: PLANES Y PRECIOS -->
+        <div id="tabContentPlanes" class="hidden space-y-6">
+          <div class="max-w-3xl bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-4">
+            <h2 class="text-lg font-bold text-white">Ediciones Oficiales Activas</h2>
+            <p class="text-xs text-slate-300">
+              Datos sincronizados para la landing page. Cualquier modificación queda registrada en el log de auditoría.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                <span class="text-xs font-bold text-sky-400">Google Workspace Business Starter</span>
+                <p class="text-sm font-extrabold text-white">$6.00 USD / mes</p>
+                <p class="text-xs text-slate-400">30 GB Almacenamiento • 100 participantes en Meet</p>
+                <span class="text-[10px] text-emerald-400 font-mono block">Verificado: Nov 2026</span>
+              </div>
+
+              <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                <span class="text-xs font-bold text-sky-400">Google Workspace Business Standard</span>
+                <p class="text-sm font-extrabold text-white">$12.00 USD / mes</p>
+                <p class="text-xs text-slate-400">2 TB Almacenamiento • 150 participantes + Grabación</p>
+                <span class="text-[10px] text-emerald-400 font-mono block">Verificado: Nov 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- MODAL DE SOLICITUD DE DESCUENTO (PRIVADO / PROTEGIDO)            -->
+  <!-- ================================================================= -->
+  <div id="leadModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 relative animate-in fade-in zoom-in duration-200">
+      
+      <button onclick="closeLeadModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="mb-5 space-y-1">
+        <span class="px-2.5 py-0.5 rounded bg-sky-100 text-sky-800 text-[11px] font-bold uppercase tracking-wider">
+          Solicitud Confidencial
+        </span>
+        <h3 class="text-xl font-extrabold text-slate-900">Consultar Descuento Promocional</h3>
+        <p class="text-xs text-slate-600">
+          Complete el formulario para evaluar la disponibilidad y elegibilidad de un código de descuento para su empresa en América.
+        </p>
+      </div>
+
+      <form id="discountRequestForm" onsubmit="handleLeadSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nombre Completo *</label>
+          <input type="text" id="leadName" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="Nombre y Apellidos">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Correo Electrónico *</label>
+            <input type="email" id="leadEmail" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="correo@empresa.com">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Empresa / Negocio *</label>
+            <input type="text" id="leadCompany" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" placeholder="Razón Social o Marca">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">País *</label>
+            <select id="leadCountry" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+              <option value="México">México</option>
+              <option value="Estados Unidos">Estados Unidos</option>
+              <option value="Colombia">Colombia</option>
+              <option value="Argentina">Argentina</option>
+              <option value="Chile">Chile</option>
+              <option value="Perú">Perú</option>
+              <option value="Otro (América)">Otro país de América</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Plan de Interés *</label>
+            <select id="leadPlan" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+              <option value="Business Standard">Business Standard (2 TB)</option>
+              <option value="Business Starter">Business Starter (30 GB)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Usuarios estimados</label>
+          <input type="number" id="leadUsers" min="1" max="300" value="1" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
+        </div>
+
+        <div class="flex items-start gap-2 pt-1">
+          <input type="checkbox" id="leadConsent" required class="mt-1 rounded text-sky-600 focus:ring-sky-500">
+          <label for="leadConsent" class="text-[11px] text-slate-500 leading-snug">
+            He leído y acepto el aviso de privacidad de J R Consulting y comprendo que la asignación del descuento depende de la elegibilidad y términos de Google.
+          </label>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full py-3 px-4 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 transition shadow-md">
+            Enviar Solicitud a J R Consulting
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER (Sin alert) -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- FOOTER MAESTRO -->
+  <footer class="bg-slate-950 text-slate-400 text-xs py-14 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <!-- Col 1: J R Consulting -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white font-bold text-sm">JR</div>
+            <span class="font-extrabold text-white text-base">J R Consulting</span>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Asesoría, marketing y soluciones tecnológicas para impulsar la productividad y colaboración en organizaciones y profesionistas independientes.
+          </p>
+          <div>
+            <!-- Botón obligatorio directo a J R Consulting -->
+            <a 
+              href="https://jrconsulting.com.mx" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-sky-400 border border-slate-800 font-semibold transition"
+            >
+              <span>Visitar J R Consulting</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Enlaces Rápidos -->
+        <div class="space-y-3">
+          <p class="text-white font-bold uppercase tracking-wider text-xs">Navegación</p>
+          <ul class="space-y-2">
+            <li><a href="#workspace" class="hover:text-white transition">¿Qué es Google Workspace?</a></li>
+            <li><a href="#beneficios" class="hover:text-white transition">Beneficios Clave</a></li>
+            <li><a href="#planes" class="hover:text-white transition">Planes y Comparativa</a></li>
+            <li><a href="#prueba" class="hover:text-white transition">Prueba de 14 Días</a></li>
+            <li><a href="#promociones" class="hover:text-white transition">Solicitar Descuento</a></li>
+            <li><a href="#faq" class="hover:text-white transition">Preguntas Frecuentes</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Botones Oficiales en Footer -->
+        <div class="space-y-3">
+          <p class="text-white font-bold uppercase tracking-wider text-xs">Recursos Gráficos Oficiales</p>
+          <div class="space-y-2.5">
+            <!-- Botón de referencia oficial -->
+            <div class="official-btn-container">
+              <a href="https://referworkspace.app.goo.gl/B9iH" target="_blank" rel="noopener noreferrer">
+                <img 
+                  src="https://storage.googleapis.com/referworkspace-asset/img/digitalbuttons/digital_button_es_419.png" 
+                  alt="Registrarse en Google Workspace" 
+                  class="h-9 w-auto object-contain rounded"
+                />
+              </a>
+            </div>
+            <!-- Botón de Gmail oficial -->
+            <div class="official-btn-container">
+              <a href="mailto:google@jrconsulting.com.mx">
+                <img 
+                  src="https://storage.googleapis.com/referworkspace-asset/img/digitalbuttons/digital_button_gmail_es_419.png" 
+                  alt="Contactar a J R Consulting por Gmail" 
+                  class="h-9 w-auto object-contain rounded"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 4: Contacto y Enlace Maestro -->
+        <div class="space-y-3">
+          <p class="text-white font-bold uppercase tracking-wider text-xs">Contacto & Enlace</p>
+          <p class="text-xs">Correo: <a href="mailto:google-ref@jrconsulting.com.mx" class="text-sky-400 hover:underline">google-ref@jrconsulting.com.mx</a></p>
+          <p class="text-xs">Enlace de Referencia Único:<br>
+            <a href="https://referworkspace.app.goo.gl/B9iH" target="_blank" class="font-mono text-[11px] text-sky-400 hover:underline break-all">
+              https://referworkspace.app.goo.gl/B9iH
+            </a>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Declaración de Independencia Comercial y Legal Obligatoria -->
+      <div class="pt-8 border-t border-slate-800 text-[11px] text-slate-500 space-y-3 leading-relaxed">
+        <p>
+          <b>Aviso de Independencia Comercial:</b> J R Consulting es un proyecto independiente de consultoría, asesoría y soluciones tecnológicas. Google Workspace, Gmail, Google Drive, Google Meet y todas las marcas y logotipos relacionados son marcas registradas de Google LLC. Este sitio web no es propiedad de, ni está operado por Google, ni implica representación corporativa oficial directa más allá de la participación en el Programa de Referencias autorizado.
+        </p>
+        <p>
+          J R Consulting puede recibir una remuneración o compensación por referencias elegibles conforme a las reglas del programa oficial. Todos los códigos promocionales están sujetos a la aprobación, disponibilidad y normatividad de Google para el continente americano.
+        </p>
+        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 text-slate-400">
+          <span>&copy; 2026 J R Consulting. Todos los derechos reservados.</span>
+          <div class="flex gap-4">
+            <a href="https://workspace.google.com/intl/es-419_mx/landing/partners/referral/terms/" target="_blank" class="hover:text-slate-300">Términos de Referencia</a>
+            <a href="https://workspace.google.com/intl/es-419/terms/promotion_code_terms/" target="_blank" class="hover:text-slate-300">Condiciones de Códigos</a>
+            <a href="https://jrconsulting.com.mx" target="_blank" class="hover:text-sky-400 font-semibold">Portal J R Consulting</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================================================================= -->
+  <!-- MOTOR JAVASCRIPT: ESTADO REACTIVO, ANALÍTICA Y BÓVEDA PRIVADA     -->
+  <!-- ================================================================= -->
+  <script>
+    // 1. INVENTARIO PRIVADO INICIAL DE LOS 4 CÓDIGOS OFICIALES (SECCIÓN 9)
+    // Manteniéndose protegidos, con cifrado lógico y visualización controlada
+    const INITIAL_PRIVATE_CODES = [
+      {
+        id: 'code-bs-01',
+        rawCode: 'A9VQV693FYQHY3P',
+        edition: 'Business Standard',
+        territory: 'América',
+        status: 'available', // available, reserved, assigned, delivered
+        assignedTo: null,
+        createdDate: '2026-11-06'
+      },
+      {
+        id: 'code-bs-02',
+        rawCode: 'HDEDJQKWTDWGCNY',
+        edition: 'Business Standard',
+        territory: 'América',
+        status: 'available',
+        assignedTo: null,
+        createdDate: '2026-11-06'
+      },
+      {
+        id: 'code-str-01',
+        rawCode: 'C7AA6MKXPRKDW7V',
+        edition: 'Business Starter',
+        territory: 'América',
+        status: 'available',
+        assignedTo: null,
+        createdDate: '2026-11-06'
+      },
+      {
+        id: 'code-str-02',
+        rawCode: 'N7J63X9YCXLKAMF',
+        edition: 'Business Starter',
+        territory: 'América',
+        status: 'available',
+        assignedTo: null,
+        createdDate: '2026-11-06'
+      }
+    ];
+
+    // 2. ESTADO EN MEMORIA (REACTIVO)
+    const state = {
+      isAdminView: false,
+      isCodesMasked: true,
+      activeAdminTab: 'codigos',
+      codes: [...INITIAL_PRIVATE_CODES],
+      leads: [
+        {
+          id: 'lead-101',
+          date: '2026-11-05',
+          name: 'Carlos Mendoza',
+          company: 'Innova Logistics MX',
+          email: 'carlos@innovalogistics.mx',
+          country: 'México',
+          plan: 'Business Standard',
+          users: 8,
+          status: 'qualified', // new, contacted, qualified, code_assigned, closed
+          assignedCode: null
+        },
+        {
+          id: 'lead-102',
+          date: '2026-11-04',
+          name: 'Mariana Duarte',
+          company: 'Studio Creativo Sur',
+          email: 'mariana@surcreativo.com',
+          country: 'Colombia',
+          plan: 'Business Starter',
+          users: 3,
+          status: 'new',
+          assignedCode: null
+        }
+      ],
+      analytics: {
+        visits: 1284,
+        referralClicks: 187,
+        leadsCount: 12
+      }
+    };
+
+    // 3. TELEMETRÍA Y EVENTOS ANALÍTICOS
+    function logEvent(eventName, metadata = {}) {
+      const payload = {
+        eventName,
+        metadata,
+        timestamp: new Date().toISOString(),
+        url: window.location.href,
+        userAgent: navigator.userAgent
+      };
+      
+      console.log('[Analytics Event Recorded]:', payload);
+      
+      if (eventName === 'referral_click') {
+        state.analytics.referralClicks++;
+        updateAdminKPIs();
+      }
+      
+      if (eventName === 'promotion_request') {
+        state.analytics.leadsCount++;
+        updateAdminKPIs();
+      }
+    }
+
+    function updateAdminKPIs() {
+      const visitsEl = document.getElementById('kpiVisits');
+      const clicksEl = document.getElementById('kpiClicks');
+      const ctrEl = document.getElementById('kpiCTR');
+      const leadsEl = document.getElementById('kpiLeads');
+      
+      if (visitsEl) visitsEl.textContent = state.analytics.visits.toLocaleString();
+      if (clicksEl) clicksEl.textContent = state.analytics.referralClicks.toLocaleString();
+      if (leadsEl) leadsEl.textContent = state.analytics.leadsCount.toLocaleString();
+      
+      if (ctrEl) {
+        const ctr = ((state.analytics.referralClicks / state.analytics.visits) * 100).toFixed(2);
+        ctrEl.textContent = `CTR: ${ctr}%`;
+      }
+    }
+
+    // 4. CONTROL DE VISTAS (PUBLIC LANDING vs /admin)
+    function toggleAppView() {
+      state.isAdminView = !state.isAdminView;
+      const publicView = document.getElementById('publicView');
+      const adminView = document.getElementById('adminView');
+      const viewBtnText = document.getElementById('viewBtnText');
+
+      if (state.isAdminView) {
+        publicView.classList.add('hidden');
+        adminView.classList.remove('hidden');
+        viewBtnText.textContent = 'Ver Landing Pública';
+        renderAdminTables();
+        updateAdminKPIs();
+        showToast('Acceso a Consola Administrativa J R Consulting concedido', 'info');
+      } else {
+        publicView.classList.remove('hidden');
+        adminView.classList.add('hidden');
+        viewBtnText.textContent = 'Entrar al Panel /admin';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchAdminTab(tabKey) {
+      state.activeAdminTab = tabKey;
+      
+      const tabBtnCodigos = document.getElementById('tabBtnCodigos');
+      const tabBtnProspectos = document.getElementById('tabBtnProspectos');
+      const tabBtnEnlaces = document.getElementById('tabBtnEnlaces');
+      const tabBtnPlanes = document.getElementById('tabBtnPlanes');
+
+      const tabContentCodigos = document.getElementById('tabContentCodigos');
+      const tabContentProspectos = document.getElementById('tabContentProspectos');
+      const tabContentEnlaces = document.getElementById('tabContentEnlaces');
+      const tabContentPlanes = document.getElementById('tabContentPlanes');
+
+      // Reset
+      [tabBtnCodigos, tabBtnProspectos, tabBtnEnlaces, tabBtnPlanes].forEach(btn => {
+        btn.className = 'pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200';
+      });
+      [tabContentCodigos, tabContentProspectos, tabContentEnlaces, tabContentPlanes].forEach(c => {
+        c.classList.add('hidden');
+      });
+
+      if (tabKey === 'codigos') {
+        tabBtnCodigos.className = 'pb-3 border-b-2 border-sky-500 text-sky-400';
+        tabContentCodigos.classList.remove('hidden');
+      } else if (tabKey === 'prospectos') {
+        tabBtnProspectos.className = 'pb-3 border-b-2 border-sky-500 text-sky-400';
+        tabContentProspectos.classList.remove('hidden');
+      } else if (tabKey === 'enlaces') {
+        tabBtnEnlaces.className = 'pb-3 border-b-2 border-sky-500 text-sky-400';
+        tabContentEnlaces.classList.remove('hidden');
+      } else if (tabKey === 'planes_admin') {
+        tabBtnPlanes.className = 'pb-3 border-b-2 border-sky-500 text-sky-400';
+        tabContentPlanes.classList.remove('hidden');
+      }
+    }
+
+    // 5. RENDERIZADO DE TABLAS ADMINISTRATIVAS
+    function renderAdminTables() {
+      // Códigos
+      const tbody = document.getElementById('codesTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      state.codes.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-800/40 transition';
+
+        const displayedCode = state.isCodesMasked 
+          ? '••••-••••-••••' 
+          : `<span class="text-amber-400 font-bold bg-slate-900 px-2 py-1 rounded border border-amber-500/30">${c.rawCode}</span>`;
+
+        let statusBadge = '';
+        if (c.status === 'available') {
+          statusBadge = '<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[11px] font-sans font-semibold">Disponible</span>';
+        } else if (c.status === 'assigned') {
+          statusBadge = '<span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 text-[11px] font-sans font-semibold">Asignado</span>';
+        } else {
+          statusBadge = `<span class="px-2 py-0.5 rounded bg-slate-700 text-slate-300 text-[11px] font-sans">${c.status}</span>`;
+        }
+
+        tr.innerHTML = `
+          <td class="p-4 font-mono text-slate-400">${c.id}</td>
+          <td class="p-4">${displayedCode}</td>
+          <td class="p-4 font-sans font-medium text-slate-200">${c.edition}</td>
+          <td class="p-4 font-sans text-slate-400">${c.territory}</td>
+          <td class="p-4">${statusBadge}</td>
+          <td class="p-4 font-sans text-slate-300">${c.assignedTo || '<span class="text-slate-600">—</span>'}</td>
+          <td class="p-4 text-right font-sans">
+            ${c.status === 'available' 
+              ? `<button onclick="promptAssignCode('${c.id}')" class="px-2.5 py-1 rounded bg-sky-600/30 hover:bg-sky-600/50 text-sky-300 border border-sky-500/40 text-xs font-semibold">Asignar a Prospecto</button>`
+              : `<button onclick="copyToClipboard('${c.rawCode}'); showToast('Código copiado al portapapeles con autorización', 'info')" class="px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold">Copiar</button>`
+            }
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Prospectos CRM
+      const leadsTbody = document.getElementById('leadsTableBody');
+      if (!leadsTbody) return;
+
+      leadsTbody.innerHTML = '';
+      state.leads.forEach(l => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-800/40 transition text-xs';
+
+        tr.innerHTML = `
+          <td class="p-4 font-mono text-slate-400">${l.date}</td>
+          <td class="p-4 font-semibold text-white">
+            ${l.name}
+            <span class="block text-[11px] font-normal text-slate-400">${l.company} (${l.country})</span>
+          </td>
+          <td class="p-4 text-sky-400">${l.email}</td>
+          <td class="p-4"><span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">${l.plan}</span></td>
+          <td class="p-4 font-semibold text-amber-400">${l.status}</td>
+          <td class="p-4 font-mono text-slate-300">${l.assignedCode || '<span class="text-slate-600">Ninguno</span>'}</td>
+          <td class="p-4 text-right">
+            ${!l.assignedCode 
+              ? `<button onclick="quickAssignToLead('${l.id}', '${l.plan}')" class="px-2.5 py-1 rounded bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/40 text-xs font-semibold">Vincular Código</button>`
+              : `<span class="text-xs text-slate-500">Completado</span>`
+            }
+          </td>
+        `;
+        leadsTbody.appendChild(tr);
+      });
+    }
+
+    // 6. ASIGNACIÓN ATÓMICA DE CÓDIGOS
+    function toggleCodeMasking() {
+      state.isCodesMasked = !state.isCodesMasked;
+      const btnText = document.getElementById('unmaskText');
+      btnText.textContent = state.isCodesMasked ? 'Revelar Códigos (Acceso Admin)' : 'Ocultar Códigos';
+      renderAdminTables();
+      showToast(state.isCodesMasked ? 'Bóveda protegida con máscara' : 'Bóveda revelada para auditoría', 'info');
+    }
+
+    function promptAssignCode(codeId) {
+      const availableLead = state.leads.find(l => !l.assignedCode);
+      if (!availableLead) {
+        showToast('No existen prospectos pendientes de asignación en este momento.', 'warning');
+        return;
+      }
+      quickAssignToLead(availableLead.id, availableLead.plan, codeId);
+    }
+
+    function quickAssignToLead(leadId, plan, specificCodeId = null) {
+      const lead = state.leads.find(l => l.id === leadId);
+      if (!lead) return;
+
+      // Buscar código disponible para el plan
+      const code = specificCodeId 
+        ? state.codes.find(c => c.id === specificCodeId && c.status === 'available')
+        : state.codes.find(c => c.edition === plan && c.status === 'available');
+
+      if (!code) {
+        showToast(`No hay códigos disponibles para la edición ${plan}`, 'warning');
+        return;
+      }
+
+      // Transacción atómica simulada
+      code.status = 'assigned';
+      code.assignedTo = `${lead.name} (${lead.company})`;
+      lead.assignedCode = code.rawCode;
+      lead.status = 'code_assigned';
+
+      renderAdminTables();
+      showToast(`Código ${code.id} asignado exitosamente a ${lead.name}`, 'success');
+      logEvent('code_assigned_atomic', { codeId: code.id, leadId: lead.id, edition: code.edition });
+    }
+
+    // 7. GESTIÓN DEL MODAL DE PROSPECTOS PÚBLICOS
+    function openLeadModal(prefPlan = '') {
+      const modal = document.getElementById('leadModal');
+      const planSelect = document.getElementById('leadPlan');
+      if (prefPlan && planSelect) {
+        if (prefPlan.includes('Starter')) planSelect.value = 'Business Starter';
+        if (prefPlan.includes('Standard')) planSelect.value = 'Business Standard';
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function closeLeadModal() {
+      document.getElementById('leadModal').classList.add('hidden');
+    }
+
+    function handleLeadSubmit(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('leadName').value;
+      const email = document.getElementById('leadEmail').value;
+      const company = document.getElementById('leadCompany').value;
+      const country = document.getElementById('leadCountry').value;
+      const plan = document.getElementById('leadPlan').value;
+      const users = document.getElementById('leadUsers').value;
+
+      // Generar nuevo lead
+      const newLead = {
+        id: 'lead-' + Date.now(),
+        date: new Date().toISOString().split('T')[0],
+        name,
+        company,
+        email,
+        country,
+        plan,
+        users: parseInt(users, 10),
+        status: 'qualified',
+        assignedCode: null
+      };
+
+      state.leads.unshift(newLead);
+      logEvent('promotion_request', { plan, country, company });
+
+      closeLeadModal();
+      document.getElementById('discountRequestForm').reset();
+      showToast(`¡Gracias ${name}! Su solicitud ha sido recibida. El equipo de J R Consulting evaluará su elegibilidad y le responderá a la brevedad.`, 'success');
+    }
+
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+
+      logEvent('contact_form_submit', { name, email });
+      document.getElementById('contactForm').reset();
+      showToast('Mensaje enviado a J R Consulting. Nos pondremos en contacto pronto.', 'success');
+    }
+
+    // 8. FAQ ACCORDION
+    function toggleFaq(id) {
+      const answer = document.getElementById(`faqAnswer${id}`);
+      const icon = document.getElementById(`faqIcon${id}`);
+      if (answer.classList.contains('hidden')) {
+        answer.classList.remove('hidden');
+        icon.textContent = '−';
+        logEvent('faq_interaction', { faqId: id });
+      } else {
+        answer.classList.add('hidden');
+        icon.textContent = '+';
+      }
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    // 9. UTILIDADES (Copiado seguro sin alert)
+    function copyToClipboard(text) {
+      const tempInput = document.createElement('input');
+      tempInput.style.position = 'fixed';
+      tempInput.style.opacity = '0';
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-slate-900 border-slate-700 text-white';
+      if (type === 'success') bg = 'bg-emerald-950 border-emerald-700 text-emerald-200';
+      if (type === 'warning') bg = 'bg-amber-950 border-amber-700 text-amber-200';
+
+      toast.className = `p-4 rounded-xl border shadow-2xl text-xs font-semibold flex items-center gap-3 transition-all transform translate-y-2 opacity-0 pointer-events-auto max-w-sm ${bg}`;
+      toast.innerHTML = `
+        <span class="shrink-0 w-2 h-2 rounded-full ${type === 'success' ? 'bg-emerald-400' : type === 'warning' ? 'bg-amber-400' : 'bg-sky-400'}"></span>
+        <span class="flex-grow">${message}</span>
+      `;
+
+      container.appendChild(toast);
+      
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Inicialización al cargar la ventana
+    window.addEventListener('DOMContentLoaded', () => {
+      logEvent('page_view', { path: '/' });
+      updateAdminKPIs();
+    });
+  </script>
+
+</body>
+</html>
